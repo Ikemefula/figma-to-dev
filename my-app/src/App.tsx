@@ -1,121 +1,130 @@
 import { useState } from "react";
-import heroImg from "./assets/hero.png";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
 import "./App.css";
 
+const menuGroups = [0, 1];
+const menuItems = [0, 1, 2, 3];
+const fabActions = ["I'm First", "I'm Second", "I'm Third"];
+
+function MenuPanel({ group }: { group: number }) {
+  return (
+    <div
+      className={`menu-panel menu-panel-${group + 1}`}
+      role="group"
+      aria-label={`Menu group ${group + 1}`}
+    >
+      {menuItems.map((item) => (
+        <button className="menu-item" key={item} type="button">
+          <span className="menu-item-icon" aria-hidden="true">
+            ★
+          </span>
+          <span>Label</span>
+          <span className="menu-chevron" aria-hidden="true" />
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function App() {
-  const [count, setCount] = useState(0);
+  const [isFabMenuOpen, setIsFabMenuOpen] = useState(true);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main className="showcase">
+      <div className="stage-frame">
+        <div className="stage">
 
-      <div className="ticks"></div>
+        
+          {/* Stacked card */}
+          <article className="stacked-card">
+            <header className="card-header">
+              <span className="avatar" aria-hidden="true">
+                A
+              </span>
+              <div className="card-heading">
+                <span>Header</span>
+                <span>Subhead</span>
+              </div>
+              <button
+                className="overflow-button"
+                type="button"
+                aria-label="More card options"
+              >
+                <span />
+                <span />
+                <span />
+              </button>
+            </header>
+            <div className="card-media" aria-hidden="true">
+              <div className="placeholder-shapes">
+                <span className="shape-triangle" />
+                <span className="shape-burst" />
+                <span className="shape-square" />
+              </div>
+            </div>
+            <div className="card-content">
+              <div className="card-title">Title</div>
+              <div className="card-subtitle">Subtitle</div>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor
+              </p>
+              <div className="card-actions">
+                <button className="button button-secondary" type="button">
+                  Secondary
+                </button>
+                <button className="button button-primary" type="button">
+                  Primary
+                </button>
+              </div>
+            </div>
+          </article>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          {/* Menu */}
+          <div className="menu-stack" aria-label="Menu examples">
+            {menuGroups.map((group) => (
+              <MenuPanel group={group} key={group} />
+            ))}
+          </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+          {/* Fab Button */}
+          <div className="fab-menu">
+            {isFabMenuOpen && (
+              <div className="fab-actions" aria-label="Quick actions">
+                {fabActions.map((action) => (
+                  <button
+                    className={`fab-action fab-action-${action.toLowerCase()}`}
+                    key={action}
+                    type="button"
+                  >
+                    <span className="fab-action-icon" aria-hidden="true">
+                      ★
+                    </span>
+                    {action}
+                  </button>
+                ))}
+              </div>
+            )}
+            <button
+              className={`fab-toggle${isFabMenuOpen ? " is-open" : ""}`}
+              type="button"
+              aria-label={
+                isFabMenuOpen ? "Close quick actions" : "Open quick actions"
+              }
+              aria-expanded={isFabMenuOpen}
+              onClick={() => setIsFabMenuOpen((open) => !open)}
+            >
+              {isFabMenuOpen ? (
+                <span className="close-icon" aria-hidden="true">
+                  ×
+                </span>
+              ) : (
+                <span aria-hidden="true">+</span>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }
 
